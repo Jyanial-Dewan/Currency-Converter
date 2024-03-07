@@ -36,8 +36,13 @@ for(let select of dropdowns) {
 };
  
 
-btn.addEventListener("click", async (evt)=>{
+btn.addEventListener("click", (evt)=> {
     evt.preventDefault();
+    updateExchangeRate();
+   
+});
+
+const updateExchangeRate = async () =>{
     let amount = document.querySelector(".amount input");
     let amountValue = amount.value;
 
@@ -52,8 +57,12 @@ btn.addEventListener("click", async (evt)=>{
     let data = await response.json();
     let rate = data[fromCurrency.value.toLowerCase()][toCurreny.value.toLowerCase()];
     
-    let finalAmount = amountValue * rate;
+    let finalAmount = (amountValue * rate).toFixed(3);
     msg.innerHTML = `${amountValue} ${fromCurrency.value} = ${finalAmount} ${toCurreny.value}`;
+}
+
+window.addEventListener("load", ()=>{
+    updateExchangeRate();
 })
 
 
